@@ -1,6 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import dva from 'dva';
+import createHistory from 'history/createBrowserHistory';
+import Router from './router'
 
-const Demo = () => <div>hello world</div>;
+const app = dva({
+  history: createHistory(),
+});
 
-ReactDOM.render(<Demo />, document.getElementById('root'));
+app.router(Router);
+
+app.start('#root');
