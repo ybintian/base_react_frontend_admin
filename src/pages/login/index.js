@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import styles from './index.less';
 
-
 class Login extends Component {
 
   componentDidMount() {
   }
   
   render() {
-    console.info(111, styles.container);
+    console.info(111, styles);
     return (
       <div className={styles.container}>
         <div className={styles.content}>

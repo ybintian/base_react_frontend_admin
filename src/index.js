@@ -1,7 +1,7 @@
 import dva from 'dva';
 import createHistory from 'history/createBrowserHistory';
-import Router from './router'
-import 'antd/dist/antd.css'
+import Router from './router';
+import 'antd/dist/antd.less';
 
 const app = dva({
   history: createHistory(),
