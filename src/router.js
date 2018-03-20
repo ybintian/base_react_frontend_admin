@@ -1,6 +1,9 @@
 import React from 'react';
 import { Router, Route, Switch } from 'dva/router';
 import BaseLayout from './layouts/BaseLayout';
+import {
+  Login
+} from './pages';
 
 const HomePage = (props) => <div>{5}</div>
 
@@ -20,8 +23,9 @@ export default function ({history}) {
   return (
     <Router history={history}>
       <Switch>
-        <BaseRoute path="/" component={HomePage}/>
+        <Route path="/login" component={Login}/>
         <BaseRoute path="/index" component={IndexPage}/>
+        <BaseRoute path="/" component={HomePage}/>
       </Switch>
     </Router>
   );
