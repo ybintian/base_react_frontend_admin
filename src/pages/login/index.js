@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
-import styles from './index.less';
+import PropTypes from 'prop-types';
+import {
+  LoginForm
+} from '../../components';
+import './index.less';
+
+
+const backgroundImage = 'https://img.alicdn.com/tfs/TB1zsNhXTtYBeNjy1XdXXXXyVXa-2252-1500.png';
 
 class Login extends Component {
+  static propTypes = {
+    form: PropTypes.object,
+  }
 
   componentDidMount() {
   }
   
   render() {
-    console.info(111, styles);
+    
     return (
-      <div className={styles.container}>
-        <div className={styles.content}>
-          <div className={styles.top}>
-            <div className={styles.header}>
-              <span className={styles.title}>Ant Design</span>
-            </div>
-            <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
+      <div className="user-login bg" style={{backgroundImage: `url(${backgroundImage})`}}>
+        <div className="user-login content-wraper">
+          <div className="user-login form-wraper">
+            <h3 className="user-login form-title">登录</h3>
+            <LoginForm />
           </div>
         </div>
       </div>
     );
   }
 }
+
+
 
 export { Login };
