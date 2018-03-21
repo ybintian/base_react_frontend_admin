@@ -7,6 +7,8 @@ const app = dva({
   history: createHistory(),
 });
 
+app.model(require('./models/login').default);
+
 app.router(Router);
 
 app.start('#root');
