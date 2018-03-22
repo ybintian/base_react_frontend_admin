@@ -21,7 +21,13 @@ function checkStatus(response) {
 export default async function request(_url, options) {
   const url = config.host + _url;
 
-  const response = await fetch(url, options);
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  });
 
   checkStatus(response);
 
