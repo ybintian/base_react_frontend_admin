@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Menu, Icon, Layout } from 'antd';
-import { routerRedux } from 'dva/router'
-import pathToRegexp from 'path-to-regexp';
-import { urlToList } from '../../utils/pathTools';
 import { Link } from 'dva/router';
 
 import './index.less';
 
 const { Sider } = Layout;
 
-export const getMeunMatcheys = (flatMenuKeys, path) => {
-  return flatMenuKeys.filter((item) => {
-    return pathToRegexp(item).test(path);
-  });
-};
-
 export class SideMenu extends Component {
   static propTypes = {
+    collapsed: PropTypes.bool,
+    history: PropTypes.object,
+    location: PropTypes.object,
   }
 
   constructor() {
     super(...arguments);
+    const fullPath = `${this.props.location.pathname}${this.props.location.search}`;
+    const pathArray = fullPath && fullPath.split('/');
+    const isInit = !pathArray[pathArray.length-2] && !pathArray[pathArray.length-1];
     this.state = {
-      openKeys: this.getDefaultCollapsedSubMenus(this.props),
-      collapse: false,
-
+      selectedKeys: isInit ?  ['home'] : [pathArray[pathArray.length - 1]],
+      defaultOpenKeys: isInit ? [] : [pathArray[pathArray.length - 2]],
     };
   }
 
@@ -34,45 +31,18 @@ export class SideMenu extends Component {
     });
     if (this.props.onClick) return this.props.onClick(obj);
     const url = '/' + obj.keyPath.reverse().join('/');
-    routerRedux.push(url);
-  }
-
-  getSelectedMenuKeys = () => {
-    const { location: { pathname } } = this.props;
-    return urlToList(pathname).map(itemPath =>
-      getMeunMatcheys(this.flatMenuKeys, itemPath).pop(),
-    );
-  }
-
-  getDefaultCollapsedSubMenus(props) {
-    const { location: { pathname } } = props || this.props;
-    return urlToList(pathname)
-      .map((item) => {
-        return getMeunMatcheys(this.flatMenuKeys, item)[0];
-      })
-      .filter(item => item);
+    this.props.history.push(url);
   }
 
   render() {
-    const { collapsed, onCollapse } = this.props;
-    const { openKeys } = this.state;
-    const menuProps = collapsed
-      ? {}
-      : {
-        openKeys,
-      };
-
-      let selectedKeys = this.getSelectedMenuKeys();
-      if (!selectedKeys.length) {
-        selectedKeys = [openKeys[openKeys.length - 1]];
-      }
+    const { collapsed } = this.props;
+    const { selectedKeys } = this.state;
     return (
       <Sider
         trigger={null}
         collapsible
         collapsed={collapsed}
         breakpoint="lg"
-        onCollapse={onCollapse}
         width={256}
         className="sider"
       > 
@@ -84,14 +54,19 @@ export class SideMenu extends Component {
           key="Menu"
           theme="dark"
           mode="inline"
-          {...menuProps}
           onOpenChange={this.handleOpenChange}
           selectedKeys={selectedKeys}
           style={{ padding: '16px 0', width: '100%' }}
+          onClick={this.onClick}
           >
             <Menu.Item key="home">
               <Icon type="home" />
               <span className="nav-text">主页</span>
+            </Menu.Item>
+
+            <Menu.Item key="users">
+              <Icon type="user" />
+              <span className="nav-text">用户</span>
             </Menu.Item>
         </Menu>
       </Sider>

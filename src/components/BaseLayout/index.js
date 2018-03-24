@@ -23,14 +23,15 @@ class BaseLayout extends Component {
     const {
       collapsed,
       location,
+      history,
     } = this.props;
-    console.info(1111, this.props);
+
     return (
       <Layout>
         <SideMenu
           collapsed={collapsed}
-          onCollapse={this.handleMenuCollapse}
-          location={location} />
+          location={location}
+          history={history} />
         <Layout>
           <Header style={{ padding: 0 }}>
             <GlobalHeader

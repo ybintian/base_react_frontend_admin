@@ -4,16 +4,16 @@ import {
   BaseLayout
 } from '../../components';
 
-export class Home extends Component{
-  static propTypes = {
-    location: PropTypes.object,
+export class User extends Component {
+  constructor() {
+    super(...arguments);
   }
 
   render() {
     return (
       <BaseLayout {...this.props}>
         <div>
-          this is home
+          user user user user
         </div>
       </BaseLayout>
     );

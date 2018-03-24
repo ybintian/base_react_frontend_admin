@@ -4,6 +4,7 @@ import CheckLayout from './layouts/CheckLayout';
 import {
   Login,
   Home,
+  User,
 } from './pages';
 
 const BaseRoute = ({ component: Component, ...rest }) =>{
@@ -22,6 +23,7 @@ export default function ({history}) {
       <Switch>
         <Route path="/login" component={Login}/>
         <BaseRoute path="/index" component={Home}/>
+        <BaseRoute path="/users" component={User}/>
         <BaseRoute path="/" component={Home}/>
       </Switch>
     </Router>
