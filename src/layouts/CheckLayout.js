@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 
-class BaseLayout extends Component {
+class CheckLayout extends Component {
 
   componentDidMount() {
     this.props.dispatch({
@@ -19,6 +19,6 @@ class BaseLayout extends Component {
   }
 }
 
-const BaseLayoutWraper = connect()(BaseLayout)
+const CheckLayoutWraper = connect()(CheckLayout)
 
-export default BaseLayoutWraper;
+export default CheckLayoutWraper;

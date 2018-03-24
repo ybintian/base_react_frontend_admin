@@ -8,6 +8,7 @@ const app = dva({
 });
 
 app.model(require('./models/login').default);
+app.model(require('./models/global').default);
 
 app.router(Router);
 
