@@ -1,8 +1,13 @@
+import { message } from 'antd';
 import fetch from 'dva/fetch';
 import config from '../config';
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
+    return response;
+  }
+
+  if([401].indexOf(response.status) > -1){
     return response;
   }
 
@@ -20,27 +25,34 @@ function checkStatus(response) {
  */
 export default async function request(_url, options) {
   const url = config.host + _url;
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  };
 
+  const Authorization = localStorage.getItem('Authorization');
+
+  if (Authorization) headers.Authorization = Authorization;
   const response = await fetch(url, {
     ...options,
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
+    headers: headers
   });
 
   checkStatus(response);
 
   const data = await response.json();
-  console.info(3333, options);
+  
+  if (data.success === false) {
+    message.error(data.message);
+  } else {
+    message.success(data.message);
+  }
+
   const ret = {
     data,
     headers: {},
   };
 
-  if (response.headers.get('x-total-count')) {
-    ret.headers['x-total-count'] = response.headers.get('x-total-count');
-  }
 
   return ret;
 }

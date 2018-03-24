@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'dva';
 
-export default class BaseLayout extends Component {
+class BaseLayout extends Component {
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'login/check',
+    });
   }
+
 
   render(){
     return(
@@ -13,3 +18,7 @@ export default class BaseLayout extends Component {
     );
   }
 }
+
+const BaseLayoutWraper = connect()(BaseLayout)
+
+export default BaseLayoutWraper;

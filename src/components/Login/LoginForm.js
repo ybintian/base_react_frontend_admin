@@ -1,20 +1,36 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { Form, Input, Button, Icon } from 'antd';
 
 const FormItem = Form.Item;
 
 class LoginForm extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    form: PropTypes.object,
+  }
 
+  handleSubmit = () => {
+    this.props.form.validateFields( async (errors, values) => {
+      this.props.dispatch({
+        type: 'login/login',
+        payload: {
+          ...values
+        },
+      });
+    });
+  }
 
   render() {
     const { form } = this.props;
     const { getFieldDecorator } = form;
     return(
-      <Form>
+      <Form onSubmit={this.handleSubmit}>
         <FormItem
           style={{width: 240}}>
           {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your username!' }],
+            rules: [{ required: true, message: '必填' }],
           })(
             <Input prefix={
               <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
@@ -25,7 +41,7 @@ class LoginForm extends Component {
         <FormItem
           style={{width: 240}}>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
+            rules: [{ required: true, message: '必填' }],
           })(
             <Input prefix={
               <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
@@ -35,7 +51,7 @@ class LoginForm extends Component {
         
         <FormItem
           style={{width: 240}}>
-          <Button type="primary" htmlType="submit" style={{width: 240}}>登录</Button>
+          <Button type="primary" style={{width: 240}} onClick={this.handleSubmit}>登录</Button>
         </FormItem>
       </Form>
     );
