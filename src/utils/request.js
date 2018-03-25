@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import fetch from 'dva/fetch';
+import { urlEncode } from '../utils/pathTools';
 import config from '../config';
 
 function checkStatus(response) {
@@ -23,8 +24,16 @@ function checkStatus(response) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-export default async function request(_url, options) {
-  const url = config.host + _url;
+export default async function request(_url, _options) {
+  let url = config.host + _url;
+  const options = {..._options};
+
+  if (_options.method === 'get') {
+    url = url + '?' + urlEncode(_options.params);
+  } else {
+    options.body = JSON.stringify(_options.params);
+  }
+
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'

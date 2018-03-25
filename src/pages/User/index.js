@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'dva';
 import {
   BaseLayout
 } from '../../components';
 
-export class User extends Component {
+class User extends Component {
   constructor() {
     super(...arguments);
+  }
+
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'users/fetch',
+      payload: {
+        page: 1,
+        perPage: 10,
+      },
+    })
   }
 
   render() {
@@ -19,3 +30,12 @@ export class User extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+  };
+}
+
+const UserWraper = connect(mapStateToProps)(User)
+
+export { UserWraper as User };
