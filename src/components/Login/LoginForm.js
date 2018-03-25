@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import { Form, Input, Button, Icon } from 'antd';
 
 const FormItem = Form.Item;
+const createForm = Form.create;
 
-class LoginForm extends Component {
+@createForm()
+export class LoginForm extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
     form: PropTypes.object,
@@ -57,7 +59,3 @@ class LoginForm extends Component {
     );
   }
 }
-
-const WrappedLoginForm = Form.create()(LoginForm);
-
-export { WrappedLoginForm as LoginForm };

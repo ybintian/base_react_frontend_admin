@@ -9,7 +9,8 @@ import './index.less';
 
 const backgroundImage = 'https://img.alicdn.com/tfs/TB1zsNhXTtYBeNjy1XdXXXXyVXa-2252-1500.png';
 
-class Login extends Component {
+@connect()
+export class Login extends Component {
   static propTypes = {
     form: PropTypes.object,
     dispatch: PropTypes.func,
@@ -29,12 +30,3 @@ class Login extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-  };
-}
-
-const LoginWraper = connect(mapStateToProps)(Login)
-
-export { LoginWraper as Login };

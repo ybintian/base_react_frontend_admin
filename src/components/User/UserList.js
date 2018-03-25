@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import { Table } from 'antd';
 
-class UserList extends Component {
+function mapStateToProps(state) {
+  return {
+    results: state.users.results,
+  };
+}
+
+@connect(mapStateToProps)
+export class UserList extends Component {
   static propTypes = {
     results: PropTypes.array,
-  }
-
-  constructor() {
-    super(...arguments);
   }
 
   componentDidMount() {
@@ -34,12 +37,3 @@ class UserList extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    results: state.users.results,
-  };
-}
-
-const UserListWraper = connect(mapStateToProps)(UserList);
-export { UserListWraper as UserList };

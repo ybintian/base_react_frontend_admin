@@ -6,9 +6,10 @@ import {
   UserList,
 } from '../../components';
 
-class User extends Component {
-  constructor() {
-    super(...arguments);
+@connect()
+export class User extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
   }
 
   componentDidMount() {
@@ -31,12 +32,3 @@ class User extends Component {
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-  };
-}
-
-const UserWraper = connect(mapStateToProps)(User)
-
-export { UserWraper as User };

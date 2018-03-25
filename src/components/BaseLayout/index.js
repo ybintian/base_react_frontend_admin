@@ -6,7 +6,10 @@ import { SideMenu, GlobalHeader } from '../';
 
 const { Content, Header, Footer } = Layout;
 
-class BaseLayout extends Component {
+@connect(({ global }) => ({
+  collapsed: global.collapsed,
+}))
+export class BaseLayout extends Component {
   static propTypes = {
     children: PropTypes.object,
     location: PropTypes.object,
@@ -51,8 +54,3 @@ class BaseLayout extends Component {
     );
   }
 }
-const BaseLayoutWraper = connect(({ global }) => ({
-  collapsed: global.collapsed,
-}))(BaseLayout);
-
-export { BaseLayoutWraper as BaseLayout };
