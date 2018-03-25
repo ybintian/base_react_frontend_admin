@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import {
-  BaseLayout
+  BaseLayout,
+  UserList,
 } from '../../components';
 
 class User extends Component {
@@ -24,7 +25,7 @@ class User extends Component {
     return (
       <BaseLayout {...this.props}>
         <div>
-          user user user user
+          <UserList />
         </div>
       </BaseLayout>
     );
