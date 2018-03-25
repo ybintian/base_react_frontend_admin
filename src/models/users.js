@@ -8,7 +8,7 @@ export default {
   },
   effects: {
     *fetch({ payload: { page, perPage } }, { call, put }) {
-      const { data } = yield call(users.fetch, { page, perPage });
+      const { data } = yield call(users.fetch, { page: page, per_page: perPage });
       if (data.success) {
         yield put({ type: 'setResults', payload: { data } });
       }
