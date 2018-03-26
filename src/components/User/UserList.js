@@ -24,7 +24,7 @@ export class UserList extends Component {
     { dataIndex: 'id', key: 'id'}, 
     { dataIndex: 'username', key: 'username'},
     { dataIndex: 'email', key: 'email'},
-    { title: 'action', key: 'action', render: (text, record) => (
+    { title: zh_CN.action, key: 'action', render: (text, record) => (
         <span>
           <a style={{margin: 5}}>详情</a>
           <a style={{margin: 5}}>编辑</a>
