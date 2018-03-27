@@ -3,6 +3,7 @@ const zh_CN = {
   user: {
     username: '用户名',
     email: '邮箱',
+    nickname: '昵称',
   }
 }
 

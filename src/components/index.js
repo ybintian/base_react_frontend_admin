@@ -7,3 +7,4 @@ export { LoginForm } from './Login/LoginForm';
 
 //user
 export { UserList } from './User/UserList';
+export { UserForm } from './User/UserForm';
