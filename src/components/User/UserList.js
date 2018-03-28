@@ -47,7 +47,9 @@ export class UserList extends Component {
     });
 
     return(
-      <Table rowKey="id" columns={columns} dataSource={this.props.results} />
+      <div style={{margin: '5px 15px'}}>
+        <Table rowKey="id" columns={columns} dataSource={this.props.results} />
+      </div>
     );
   }
 }

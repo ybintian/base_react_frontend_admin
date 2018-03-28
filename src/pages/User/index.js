@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
+import { Row, Col, Button } from 'antd';
 import {
   BaseLayout,
   UserList,
@@ -57,6 +58,13 @@ export class User extends Component {
     }
   }
 
+  handleNew = () => {
+    this.setState({
+      formVisible: true,
+      formAction: 'new',
+    });
+  }
+
   handleFormCancel = () => {
     this.setState({
       formVisible: false,
@@ -74,6 +82,13 @@ export class User extends Component {
     return (
       <BaseLayout {...this.props}>
         <div>
+          <Row style={{height: 50}}>
+            <Col span={20}>
+            </Col>
+            <Col span={4}>
+              <Button onClick={this.handleNew} style={{margin: '5px 15px', float: 'right'}}>新建</Button>
+            </Col>
+          </Row>
           <UserList onRecordAction={this.handleRecordAction} />
           <UserForm 
             visible={formVisible}

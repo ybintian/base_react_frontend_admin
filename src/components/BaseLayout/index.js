@@ -43,7 +43,7 @@ export class BaseLayout extends Component {
               onMenuClick={this.handleMenuClick}
             />
           </Header>
-          <Content style={{ margin: '24px 24px 0', height: '100%' }}>
+          <Content style={{ margin: '24px 24px 0', height: '100%', backgroundColor: '#fff' }}>
             {this.props.children}
           </Content>
           <Footer style={{ padding: 0 }}>

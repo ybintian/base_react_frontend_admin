@@ -56,6 +56,13 @@ export class UserForm extends Component{
     dispatch: PropTypes.func,
   }
 
+  constructor(props){
+    super(props);
+    this.state = {
+      confirmDirty: false,
+    }
+  }
+
   handleOk = () => {
     this.props.form.validateFieldsAndScroll(async (errors, values) => {
       if (errors) {
@@ -63,15 +70,42 @@ export class UserForm extends Component{
         return;
       }
 
-      await this.props.dispatch({
-        type: 'users/update',
-        payload: {
-          id: this.props.record.id,
-          user: values
-        }
-      });
+      let payload = {
+        user: values,
+      }
+
+      if(this.props.action === 'edit') {
+        payload.id = this.props.record.id
+        await this.props.dispatch({
+          type: 'users/update',
+          payload: payload,
+        });
+      } else if(this.props.action === 'new') {
+        await this.props.dispatch({
+          type: 'users/create',
+          payload: payload,
+        });
+      }
+
       this.props.onCancel();
     });
+  }
+
+  compareToFirstPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('两个密码必须一致');
+    } else {
+      callback();
+    }
+  }
+
+  validateToNextPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['confirm'], { force: true });
+    }
+    callback();
   }
 
   render(){
@@ -82,9 +116,26 @@ export class UserForm extends Component{
         <Form>
           <FormItem
           {...formItemLayout}
+            label="用户名"
+          >
+          {getFieldDecorator('username', {
+            rules: [{
+              required: true, message: '必填',
+            }]
+          })(
+            <Input />
+          )}
+          </FormItem>
+
+          <FormItem
+          {...formItemLayout}
             label="昵称"
           >
-          {getFieldDecorator('nickname', {})(
+          {getFieldDecorator('nickname', {
+            rules: [{
+              required: true, message: '必填',
+            }]
+          })(
             <Input />
           )}
           </FormItem>
@@ -93,7 +144,13 @@ export class UserForm extends Component{
           {...formItemLayout}
             label="邮箱"
           >
-          {getFieldDecorator('email', {})(
+          {getFieldDecorator('email', {
+            rules: [{
+              type: 'email', message: '错误的邮箱格式',
+            }, {
+              required: true, message: '必填',
+            }],
+          })(
             <Input />
           )}
           </FormItem>
@@ -102,8 +159,29 @@ export class UserForm extends Component{
           {...formItemLayout}
             label="密码"
           >
-          {getFieldDecorator('password', {})(
-            <Input />
+          {getFieldDecorator('password', {
+            rules: [{
+              required: true, message: '必填',
+            }, {
+              validator: this.validateToNextPassword,
+            }],
+          })(
+            <Input type="password" />
+          )}
+          </FormItem>
+
+          <FormItem
+          {...formItemLayout}
+            label="密码"
+          >
+          {getFieldDecorator('password_confirmation', {
+            rules: [{
+              required: true, message: '必填',
+            }, {
+              validator: this.compareToFirstPassword,
+            }],
+          })(
+            <Input type="password" />
           )}
           </FormItem>
         </Form>

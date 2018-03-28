@@ -14,6 +14,12 @@ export default {
         yield put({ type: 'setResults', payload: { data } });
       }
     },
+    *create({ payload: { user } }, { call, put }) {
+      const { data } = yield call(users.create, { user });
+      if (data.success) {
+        yield put({ type: 'createResult', payload: { result: data.result } });
+      }
+    },
     *update({ payload: { user, id } }, { call, put }) {
       const { data } = yield call(users.update, { user , id});
       if (data.success) {
@@ -29,6 +35,9 @@ export default {
     updateResult (state, { payload }) {
       const results = updateRecord(state.results, payload.result);
       return { ...state, results: [...results]};
+    },
+    createResult (state, { payload }) {
+      return { ...state, results: [payload.result, ...state.results]};
     }
   }
 }
