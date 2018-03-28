@@ -17,6 +17,11 @@ export default {
         yield put(routerRedux.push('/'));
       }
     },
+    *logout({ payload }, { call, put }) {
+      localStorage.setItem('Authorization', undefined);
+      yield put({ type: 'unSetUser'});
+      yield put(routerRedux.push('/login'));
+    },
     *check(action, { call, put }) {
       const token = localStorage.getItem('Authorization');
       if (!token){ 
