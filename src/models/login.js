@@ -21,6 +21,7 @@ export default {
       const token = localStorage.getItem('Authorization');
       if (!token){ 
         yield put(routerRedux.push('/login'));
+        yield put({ type: 'unSetUser'});
         return;
       }
 
@@ -29,6 +30,7 @@ export default {
         yield put({ type: 'setUser', payload: { data } });
       } else {
         yield put(routerRedux.push('/login'));
+        yield put({ type: 'unSetUser'});
       }
     },
   },
@@ -37,5 +39,8 @@ export default {
       const { data } = payload;
       return { ...state, currentUser: data.current_user, token: data.token, loginState: true };
     },
+    unSetUser (state) {
+      return { ...state, currentUser: {}, token: '', loginState: false };
+    }
   }
 }

@@ -9,11 +9,29 @@ import './index.less';
 
 const backgroundImage = 'https://img.alicdn.com/tfs/TB1zsNhXTtYBeNjy1XdXXXXyVXa-2252-1500.png';
 
-@connect()
+@connect(({ login }) => ({
+  loginState: login.loginState,
+}))
 export class Login extends Component {
   static propTypes = {
     form: PropTypes.object,
     dispatch: PropTypes.func,
+    loginState: PropTypes.bool,
+    history: PropTypes.object,
+  }
+
+  componentDidMount() {
+    const Authorization = localStorage.getItem('Authorization');
+    if (Authorization) this.handleCheck()
+  }
+
+  handleCheck = async () => {
+    await this.props.dispatch({
+      type: 'login/check'
+    });
+    if(this.props.loginState) {
+      this.props.history.push('/');
+    }
   }
   
   render() {
