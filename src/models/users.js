@@ -4,6 +4,7 @@ import { updateRecord, destroyRecord } from '../utils/list';
 export default {
   namespace: 'users',
   state: {
+    detailVisible: false,
     records: [],
     pagination: {}
   },
@@ -32,6 +33,9 @@ export default {
         yield put({ type: 'destroyRecord', payload: { id } });
       }
     },
+    *changeDetailVisible({ }, { put }) {
+      yield put({ type: 'onChangeDetailVisible' });
+    },
   },
   reducers: {
     setRecords (state, { payload }) {
@@ -48,6 +52,9 @@ export default {
     destroyRecord (state, { payload }) {
       const records = destroyRecord(state.records, payload.id);
       return { ...state, records: [...state.records]};
+    },
+    onChangeDetailVisible (state, { payload }) {
+      return { ...state, detailVisible: !state.detailVisible};
     },
   }
 }

@@ -6,6 +6,7 @@ import {
   BaseLayout,
   UserList,
   UserForm,
+  UserDetail,
 } from '../../components';
 
 @connect(({ users }) => ({
@@ -25,14 +26,11 @@ export class User extends Component {
   }
 
   handleRecordAction = (actionName, record) => {
-    console.info(record);
     switch(actionName){
       case 'detail':
-        this.setState({record: record}, () => {
-          this.setState({
-            detailVisible: true,
-          });
-        });
+        this.props.dispatch({
+          type: 'users/changeDetailVisible',
+        })
         break;
       case 'edit':
         this.setState({
@@ -108,6 +106,7 @@ export class User extends Component {
             action={formAction}
             record={record}
           />
+          <UserDetail />
         </div>
       </BaseLayout>
     );
