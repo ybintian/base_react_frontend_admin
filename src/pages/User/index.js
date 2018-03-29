@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import { Row, Col, Button } from 'antd';
+import { Button } from 'antd';
 import {
   BaseLayout,
   UserList,
@@ -35,6 +35,7 @@ export class User extends Component {
         });
         break;
       case 'edit':
+        console.info(111111);
         this.setState({
           formAction: 'edit',
           record: record,

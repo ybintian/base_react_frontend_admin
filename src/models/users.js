@@ -4,50 +4,50 @@ import { updateRecord, destroyRecord } from '../utils/list';
 export default {
   namespace: 'users',
   state: {
-    results: [],
+    records: [],
     pagination: {}
   },
   effects: {
     *fetch({ payload: { page, perPage } }, { call, put }) {
       const { data } = yield call(users.fetch, { page: page, per_page: perPage });
       if (data.success) {
-        yield put({ type: 'setResults', payload: { data } });
+        yield put({ type: 'setRecords', payload: { data } });
       }
     },
     *create({ payload: { user } }, { call, put }) {
       const { data } = yield call(users.create, { user });
       if (data.success) {
-        yield put({ type: 'createResult', payload: { result: data.result } });
+        yield put({ type: 'createRecord', payload: { record: data.record } });
       }
     },
     *update({ payload: { user, id } }, { call, put }) {
       const { data } = yield call(users.update, { user , id});
       if (data.success) {
-        yield put({ type: 'updateResult', payload: { result: data.result } });
+        yield put({ type: 'updateRecord', payload: { record: data.record } });
       }
     },
     *destroy({ payload: { id } }, { call, put }) {
       const { data } = yield call(users.destroy, { id });
       if (data.success) {
-        yield put({ type: 'destroyResult', payload: { id } });
+        yield put({ type: 'destroyRecord', payload: { id } });
       }
     },
   },
   reducers: {
-    setResults (state, { payload }) {
+    setRecords (state, { payload }) {
       const { data } = payload;
-      return { ...state, results: data.results, pagination: data.pagination};
+      return { ...state, records: data.records, pagination: data.pagination};
     },
-    updateResult (state, { payload }) {
-      const results = updateRecord(state.results, payload.result);
-      return { ...state, results: [...results]};
+    createRecord (state, { payload }) {
+      return { ...state, records: [payload.record, ...state.records]};
     },
-    createResult (state, { payload }) {
-      return { ...state, results: [payload.result, ...state.results]};
+    updateRecord (state, { payload }) {
+      const records = updateRecord(state.records, payload.record);
+      return { ...state, records: [...records]};
     },
-    destroyResult (state, { payload }) {
-      const results = destroyRecord(state.results, payload.id);
-      return { ...state, results: [...state.results]};
+    destroyRecord (state, { payload }) {
+      const records = destroyRecord(state.records, payload.id);
+      return { ...state, records: [...state.records]};
     },
   }
 }

@@ -6,7 +6,7 @@ import zh_CN from '../../locales/zh_CN';
 
 function mapStateToProps(state) {
   return {
-    results: state.users.results,
+    records: state.users.records,
     pagination: state.users.pagination,
   };
 }
@@ -14,7 +14,7 @@ function mapStateToProps(state) {
 @connect(mapStateToProps)
 export class UserList extends Component {
   static propTypes = {
-    results: PropTypes.array,
+    records: PropTypes.array,
     onRecordAction: PropTypes.func,
   }
 
@@ -29,6 +29,7 @@ export class UserList extends Component {
   }
 
   handleActionsClick = (actionName, record) => {
+    console.info(222222, actionName, record);
     this.props.onRecordAction && this.props.onRecordAction(actionName,record);
   }
 
@@ -62,8 +63,8 @@ export class UserList extends Component {
     { dataIndex: 'nickname', key: 'nickname'},
     { title: zh_CN.action, key: 'action', render: (text, record) => (
         <span>
-          <a style={{margin: 5}} onClick={() => this.handleActionsClick.bind(this, 'detail', record)}>详细</a>
-          <a style={{margin: 5}} onClick={() => this.handleActionsClick.bind(this, 'edit', record)}>修改</a>
+          <a style={{margin: 5}} onClick={this.handleActionsClick.bind(this, 'detail', record)}>详细</a>
+          <a style={{margin: 5}} onClick={this.handleActionsClick.bind(this, 'edit', record)}>修改</a>
           <Popconfirm 
             title="确认要删除吗？"
             okText="是"
@@ -83,7 +84,7 @@ export class UserList extends Component {
 
     return(
       <div style={{margin: '5px 15px'}}>
-        <Table rowKey="id" columns={columns} dataSource={this.props.results} pagination={{
+        <Table rowKey="id" columns={columns} dataSource={this.props.records} pagination={{
           current: page,
           pageSize: per_page,
           total: total,
