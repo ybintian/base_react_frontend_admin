@@ -7,6 +7,7 @@ import zh_CN from '../../locales/zh_CN';
 function mapStateToProps(state) {
   return {
     results: state.users.results,
+    pagination: state.users.pagination,
   };
 }
 
@@ -18,13 +19,42 @@ export class UserList extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'users/fetch',
+      payload: {
+        page: 1,
+        perPage: 10,
+      },
+    });
   }
 
   handleActionsClick = (actionName, record) => {
     this.props.onRecordAction && this.props.onRecordAction(actionName,record);
   }
 
+  handleChange = (v) => {
+    const { per_page } = this.props.pagination;
+    this.props.dispatch({
+      type: 'users/fetch',
+      payload: {
+        page: v,
+        perPage: per_page,
+      },
+    });
+  }
+
+  handleShowSizeChange = (page, pageSize) => {
+    this.props.dispatch({
+      type: 'users/fetch',
+      payload: {
+        page: page,
+        perPage: pageSize,
+      },
+    });
+  }
+
   render() {
+    const { page, per_page, total } = this.props.pagination;
     const columns = [
     { dataIndex: 'id', key: 'id'}, 
     { dataIndex: 'username', key: 'username'},
@@ -48,7 +78,14 @@ export class UserList extends Component {
 
     return(
       <div style={{margin: '5px 15px'}}>
-        <Table rowKey="id" columns={columns} dataSource={this.props.results} />
+        <Table rowKey="id" columns={columns} dataSource={this.props.results} pagination={{
+          current: page,
+          pageSize: per_page,
+          total: total,
+          onChange: this.handleChange,
+          showSizeChanger: true,
+          onShowSizeChange: this.handleShowSizeChange,
+        }} />
       </div>
     );
   }

@@ -21,16 +21,6 @@ export class User extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.dispatch({
-      type: 'users/fetch',
-      payload: {
-        page: 1,
-        perPage: 10,
-      },
-    })
-  }
-
   handleRecordAction = (actionName, record) => {
     console.info(record);
     switch(actionName){
