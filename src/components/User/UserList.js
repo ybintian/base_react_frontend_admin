@@ -29,7 +29,6 @@ export class UserList extends Component {
   }
 
   handleActionsClick = (actionName, record) => {
-    console.info(222222, actionName, record);
     this.props.onRecordAction && this.props.onRecordAction(actionName,record);
   }
 

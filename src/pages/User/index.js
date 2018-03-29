@@ -35,7 +35,6 @@ export class User extends Component {
         });
         break;
       case 'edit':
-        console.info(111111);
         this.setState({
           formAction: 'edit',
           record: record,
