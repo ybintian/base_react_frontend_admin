@@ -1,5 +1,5 @@
 import * as users from '../services/users'
-import { updateRecord } from '../utils/list';
+import { updateRecord, destroyRecord } from '../utils/list';
 
 export default {
   namespace: 'users',
@@ -26,6 +26,12 @@ export default {
         yield put({ type: 'updateResult', payload: { result: data.result } });
       }
     },
+    *destroy({ payload: { id } }, { call, put }) {
+      const { data } = yield call(users.destroy, { id });
+      if (data.success) {
+        yield put({ type: 'destroyResult', payload: { id } });
+      }
+    },
   },
   reducers: {
     setResults (state, { payload }) {
@@ -38,6 +44,10 @@ export default {
     },
     createResult (state, { payload }) {
       return { ...state, results: [payload.result, ...state.results]};
-    }
+    },
+    destroyResult (state, { payload }) {
+      const results = destroyRecord(state.results, payload.id);
+      return { ...state, results: [...state.results]};
+    },
   }
 }

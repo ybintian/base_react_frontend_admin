@@ -20,3 +20,9 @@ export function update(params = {}, id) {
     params: params,
   });
 }
+
+export function destroy(params = {}) {
+  return request(`/admin_api/v1/users/${params.id}`, {
+    method: 'delete',
+  });
+}

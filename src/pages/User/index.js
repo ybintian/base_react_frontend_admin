@@ -8,10 +8,13 @@ import {
   UserForm,
 } from '../../components';
 
-@connect()
+@connect(({ users }) => ({
+  pagination: users.pagination,
+}))
 export class User extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
+    pagination: PropTypes.object,
   }
 
   constructor(props) {
@@ -42,6 +45,12 @@ export class User extends Component {
         });
         break;
       case 'destroy':
+        this.props.dispatch({
+          type: 'users/destroy',
+          payload: {
+            id: record.id,
+          },
+        });
         break;
       default:
         break;
@@ -67,18 +76,30 @@ export class User extends Component {
     });
   }
 
+  handleRefresh = () => {
+    const { page, per_page } = this.props.pagination;
+    this.props.dispatch({
+      type: 'users/fetch',
+      payload: {
+        page: page,
+        perPage: per_page,
+      },
+    });
+  }
+
   render() {
     const { formVisible, formAction, record } = this.state;
     return (
       <BaseLayout {...this.props}>
         <div>
-          <Row style={{height: 50}}>
-            <Col span={20}>
-            </Col>
-            <Col span={4}>
+          <div style={{height: 50}}>
+            <div>
+              <Button onClick={this.handleRefresh} style={{margin: '5px 15px', float: 'right'}}>刷新</Button>
+            </div>
+            <div>
               <Button onClick={this.handleNew} style={{margin: '5px 15px', float: 'right'}}>新建</Button>
-            </Col>
-          </Row>
+            </div>
+          </div>
           <UserList onRecordAction={this.handleRecordAction} />
           <UserForm 
             visible={formVisible}

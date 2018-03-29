@@ -8,3 +8,10 @@ export function updateRecord(_records, record){
   records[index] = record;
   return records;
 }
+
+export function destroyRecord(_records, id) {
+  var records = _.remove(_records, (i) => {
+    return i.id === id; 
+  });
+  return records;
+}

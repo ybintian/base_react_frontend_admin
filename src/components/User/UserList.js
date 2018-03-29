@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import { Table } from 'antd';
+import { Table, Popconfirm } from 'antd';
 import zh_CN from '../../locales/zh_CN';
 
 function mapStateToProps(state) {
@@ -62,9 +62,15 @@ export class UserList extends Component {
     { dataIndex: 'nickname', key: 'nickname'},
     { title: zh_CN.action, key: 'action', render: (text, record) => (
         <span>
-          <a style={{margin: 5}} onClick={() => this.handleActionsClick('detail', record)}>详细</a>
-          <a style={{margin: 5}} onClick={() => this.handleActionsClick('edit', record)}>修改</a>
-          <a style={{margin: 5}} onClick={() => this.handleActionsClick('destroy', record)}>删除</a>
+          <a style={{margin: 5}} onClick={() => this.handleActionsClick.bind(this, 'detail', record)}>详细</a>
+          <a style={{margin: 5}} onClick={() => this.handleActionsClick.bind(this, 'edit', record)}>修改</a>
+          <Popconfirm 
+            title="确认要删除吗？"
+            okText="是"
+            cancelText="否"
+            onConfirm={this.handleActionsClick.bind(this, 'destroy', record)}>
+            <a style={{margin: 5}}>删除</a>
+          </Popconfirm>
         </span>
       ),
     }].map(res => {
@@ -73,7 +79,6 @@ export class UserList extends Component {
       } else {
         return res;
       }
-      
     });
 
     return(
