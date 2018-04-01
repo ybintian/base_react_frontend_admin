@@ -1,5 +1,11 @@
 import request from '../utils/request';
 
+export function get(params) {
+  return request(`/admin_api/v1/users/${params.id}`, {
+    method: 'get',
+  });
+}
+
 export function fetch(params = {}) {
   return request('/admin_api/v1/users', {
     method: 'get',

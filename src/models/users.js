@@ -5,10 +5,17 @@ export default {
   namespace: 'users',
   state: {
     detailVisible: false,
+    record: {},
     records: [],
     pagination: {}
   },
   effects: {
+    *get({ payload: { id } }, { call, put }) {
+      const { data } = yield call(users.get, { id });
+      if (data.success) {
+        yield put({ type: 'setRecord', payload: { data } });
+      }
+    },
     *fetch({ payload: { page, perPage } }, { call, put }) {
       const { data } = yield call(users.fetch, { page: page, per_page: perPage });
       if (data.success) {
@@ -33,11 +40,12 @@ export default {
         yield put({ type: 'destroyRecord', payload: { id } });
       }
     },
-    *changeDetailVisible({ }, { put }) {
-      yield put({ type: 'onChangeDetailVisible' });
-    },
   },
   reducers: {
+    setRecord (state, { payload }) {
+      const { data } = payload;
+      return { ...state, record: data.record};
+    },
     setRecords (state, { payload }) {
       const { data } = payload;
       return { ...state, records: data.records, pagination: data.pagination};
@@ -51,9 +59,9 @@ export default {
     },
     destroyRecord (state, { payload }) {
       const records = destroyRecord(state.records, payload.id);
-      return { ...state, records: [...state.records]};
+      return { ...state, records: [...records]};
     },
-    onChangeDetailVisible (state, { payload }) {
+    changeDetailVisible (state, { payload }) {
       return { ...state, detailVisible: !state.detailVisible};
     },
   }

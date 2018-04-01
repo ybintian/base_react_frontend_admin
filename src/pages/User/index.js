@@ -29,8 +29,14 @@ export class User extends Component {
     switch(actionName){
       case 'detail':
         this.props.dispatch({
+          type: 'users/get',
+          payload: {
+            id: record.id,
+          }
+        });
+        this.props.dispatch({
           type: 'users/changeDetailVisible',
-        })
+        });
         break;
       case 'edit':
         this.setState({
