@@ -4,6 +4,10 @@ const zh_CN = {
     username: '用户名',
     email: '邮箱',
     nickname: '昵称',
+  },
+  article: {
+    title: '用户名',
+    description: '描述',
   }
 }
 

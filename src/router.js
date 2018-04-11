@@ -5,6 +5,7 @@ import {
   Login,
   Home,
   User,
+  Article,
 } from './pages';
 
 const BaseRoute = ({ component: Component, ...rest }) =>{
@@ -24,6 +25,7 @@ export default function ({history}) {
         <Route path="/login" component={Login}/>
         <BaseRoute path="/index" component={Home}/>
         <BaseRoute path="/users" component={User}/>
+        <BaseRoute path="/articles" component={Article}/>
         <BaseRoute path="/" component={Home}/>
       </Switch>
     </Router>

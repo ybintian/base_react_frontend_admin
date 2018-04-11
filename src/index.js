@@ -10,6 +10,7 @@ const app = dva({
 app.model(require('./models/login').default);
 app.model(require('./models/global').default);
 app.model(require('./models/users').default);
+app.model(require('./models/articles').default);
 
 app.router(Router);
 

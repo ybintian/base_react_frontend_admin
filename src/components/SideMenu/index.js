@@ -68,6 +68,11 @@ export class SideMenu extends Component {
               <Icon type="user" />
               <span className="nav-text">用户</span>
             </Menu.Item>
+
+            <Menu.Item key="articles">
+              <Icon type="book" />
+              <span className="nav-text">文章</span>
+            </Menu.Item>
         </Menu>
       </Sider>
     );
