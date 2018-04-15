@@ -7,6 +7,7 @@ const zh_CN = {
   },
   article: {
     title: '用户名',
+    category: '类型',
     description: '描述',
   }
 }

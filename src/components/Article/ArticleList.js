@@ -58,6 +58,13 @@ export class ArticleList extends Component {
     const columns = [
     { dataIndex: 'id', key: 'id'}, 
     { dataIndex: 'title', key: 'username'},
+    { dataIndex: 'category', key: 'category', render: (v) => {
+      if (v === 'rich_text') {
+        return '富文本';
+      } else if(v === 'markdown') {
+        return 'markdown';
+      }
+    }},
     { dataIndex: 'description', key: 'email'},
     { title: zh_CN.action, key: 'action', render: (text, record) => (
         <span>
